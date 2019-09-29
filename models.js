@@ -29,6 +29,8 @@ const Posts = sequelize.define('posts', {
 });
 
 // RELATIONSHIP BETWEEN QUESTION AND ANSWER WILL BE ESTABLISHED HERE...
+Users.hasMany(Posts);
+Posts.belongsTo(Users);
 
 module.exports = {
   Users,

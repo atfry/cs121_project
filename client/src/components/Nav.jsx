@@ -1,9 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function Nav() {
+const Nav = () => {
+
   return (
-    <div>
-
-    </div>
+    <header>
+      <nav id="nav-bar">
+        <Link to="/home">Home</Link>
+        <Link to="/allrides">All Rides</Link>
+        <Link to="requestride">Request a ride</Link>
+        <button>Log out</button>
+      </nav>
+    </header>
   )
 }
+
+export default Nav;
