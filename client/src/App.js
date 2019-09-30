@@ -6,20 +6,29 @@ import RegisterForm from './components/RegisterForm';
 import AllRides from './components/AllRides';
 import RideRequest from './components/RideRequest';
 import { Route, withRouter } from 'react-router-dom';
-import {createPost} from './services/api';
+import {createPost, fetchPost} from './services/posts.js';
 import './App.css';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      currentView: 'register',
       registerFormData: {
         username: '',
         password: '',
         email: ''
-      }
-
+      },
+      postFormData: {
+        driver: null,
+        origin: '',
+        destination: '',
+        date: '',
+        time: '',
+        seats: '',
+        stops: null
+      },
+      posts: []
     }
   }
 
@@ -46,9 +55,31 @@ class App extends React.Component {
     console.log(this.registerFormData);
   }
 
+  handlePostFormChange = (ev) => {
+    const {name, value} = ev.target;
+    this.setState(prevState => ({
+      postFormData: {
+        ...prevState.postFormData,
+        [name]: value
+      },
+    }));
+  }
+
   handlePostSubmit = async(ev) => {
     ev.preventDefault();
-    
+    const post = await createPost(this.state.postFormData);
+    this.setState(prevState => ({
+      posts: [...prevState.posts, post],
+      postFormData: {
+        driver: null,
+        origin: '',
+        destination: '',
+        date: '',
+        time: '',
+        seats: '',
+        stops: null
+      },
+    }));
   }
 
 
