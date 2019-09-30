@@ -6,6 +6,7 @@ import RegisterForm from './components/RegisterForm';
 import AllRides from './components/AllRides';
 import RideRequest from './components/RideRequest';
 import { Route, withRouter } from 'react-router-dom';
+import {createPost} from './services/api';
 import './App.css';
 
 class App extends React.Component {
@@ -45,6 +46,10 @@ class App extends React.Component {
     console.log(this.registerFormData);
   }
 
+  handlePostSubmit = async(ev) => {
+    ev.preventDefault();
+    
+  }
 
 
   render() {
