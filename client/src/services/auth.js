@@ -20,6 +20,7 @@ export const createUser = async (userData) => {
   const resp = await api.post('/users', userData);
   const { user, token } = resp.data;
   storeToken(token);
+  console.log(resp);
   return user;
 };
 
