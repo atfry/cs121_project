@@ -6,7 +6,7 @@ import RegisterForm from './components/RegisterForm';
 import AllRides from './components/AllRides';
 import RideRequest from './components/RideRequest';
 import { Route, withRouter } from 'react-router-dom';
-import {createPost, fetchPost} from './services/posts.js';
+import { createPost, fetchPost } from './services/posts.js';
 import './App.css';
 
 class App extends React.Component {
@@ -56,7 +56,7 @@ class App extends React.Component {
   }
 
   handlePostFormChange = (ev) => {
-    const {name, value} = ev.target;
+    const { name, value } = ev.target;
     this.setState(prevState => ({
       postFormData: {
         ...prevState.postFormData,
@@ -65,7 +65,7 @@ class App extends React.Component {
     }));
   }
 
-  handlePostSubmit = async(ev) => {
+  handlePostSubmit = async (ev) => {
     ev.preventDefault();
     const post = await createPost(this.state.postFormData);
     this.setState(prevState => ({
@@ -104,7 +104,9 @@ class App extends React.Component {
         )} />
 
         <Route path="/requestride" render={() => (
-          <RideRequest />
+          <RideRequest
+            postFormData={this.state.postFormData}
+          />
         )} />
       </div>
     );

@@ -15,6 +15,11 @@ app.get('/ping', (req, res) => {
   res.json('pong');
 });
 
+app.get('/', (req, res) => {
+  res.json({ message: 'It is working' })
+})
+
+
 app.use('/posts', postRouter);
 
 app.listen(PORT, () => {
