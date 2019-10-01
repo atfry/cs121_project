@@ -6,14 +6,24 @@ import RegisterForm from './components/RegisterForm';
 import AllRides from './components/AllRides';
 import RideRequest from './components/RideRequest';
 import { Route, withRouter } from 'react-router-dom';
-import {createPost, fetchPost} from './services/posts.js';
+import { createPost, fetchPosts } from './services/posts.js';
+import {
+  ping,
+  createUser,
+  verifyToken,
+} from './services/auth';
 import './App.css';
+import LoginForm from './components/LoginForm';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentView: 'register',
+      loginFormData: {
+        name: '',
+        password: '',
+      },
       registerFormData: {
         username: '',
         password: '',
@@ -32,6 +42,29 @@ class App extends React.Component {
     }
   }
 
+  handleLoginFormChange = (ev) => {
+    const { name, value } = ev.target;
+
+    this.setState(prevState => ({
+      loginFormData: {
+        ...prevState.loginFormData,
+        [name]: value
+      }
+    }));
+  }
+
+  handleLoginSubmit = async (ev) => {
+    ev.preventDefault();
+    this.setState({
+      loginFormData: {
+        username: '',
+        password: '',
+      }
+    })
+    console.log(this.loginFormData);
+    this.props.history.push('/home');
+  }
+
   handleRegisterFormChange = (ev) => {
     const { name, value } = ev.target;
 
@@ -45,6 +78,8 @@ class App extends React.Component {
 
   handleRegisterSubmit = async (ev) => {
     ev.preventDefault();
+    const user = await createUser(this.state.registerFormData);
+    console.log(user);
     this.setState({
       registerFormData: {
         username: '',
@@ -53,19 +88,21 @@ class App extends React.Component {
       }
     })
     console.log(this.registerFormData);
+    this.props.history.push('/home');
   }
 
   handlePostFormChange = (ev) => {
-    const {name, value} = ev.target;
+    const { name, value } = ev.target;
     this.setState(prevState => ({
       postFormData: {
         ...prevState.postFormData,
         [name]: value
       },
     }));
+    console.log(this.postFormData);
   }
 
-  handlePostSubmit = async(ev) => {
+  handlePostSubmit = async (ev) => {
     ev.preventDefault();
     const post = await createPost(this.state.postFormData);
     this.setState(prevState => ({
@@ -82,29 +119,82 @@ class App extends React.Component {
     }));
   }
 
+  async componentDidMount() {
+    const data = await ping();
+    const user = await verifyToken();
+    if (user) {
+      this.setState({
+        currentUser: user,
+      })
+    }
+    try {
+
+    } catch (e) {
+      console.log(e.message);
+    }
+    const posts = await fetchPosts();
+    this.setState({
+      posts
+    });
+  }
+
+  toggleAuthView = () => {
+    this.setState(prevState => ({
+      currentView: prevState.currentView === 'register' ? 'login' : 'register'
+    }));
+  }
+
 
   render() {
     return (
       <div className="App">
         <Nav />
         <Header />
+        <Route exact path="/" render={() => (
+          <>
 
-        <RegisterForm
-          registerFormData={this.state.registerFormData}
-          handleRegisterSubmit={this.handleRegisterSubmit}
-          handleRegisterFormChange={this.handleRegisterFormChange}
-        />
+            {this.state.currentView === 'login' && (
+              <>
+                <LoginForm
+                  loginFormData={this.state.loginFormData}
+                  handleLoginSubmit={this.handleLoginSubmit}
+                  handleLoginFormChange={this.handleLoginFormChange}
+                />
+                <button onClick={this.toggleAuthView}>Register</button>
+              </>
+            )}
+
+            {this.state.currentView === 'register' && (
+              <>
+                <RegisterForm
+                  registerFormData={this.state.registerFormData}
+                  handleRegisterSubmit={this.handleRegisterSubmit}
+                  handleRegisterFormChange={this.handleRegisterFormChange}
+                />
+                <button onClick={this.toggleAuthView}>Login</button>
+              </>
+            )}
+
+          </>
+        )} />
+
 
         <Route path="/home" render={() => (
           <Home />
         )} />
 
         <Route path="/allrides" render={() => (
-          <AllRides />
+          <AllRides
+            posts={this.state.posts}
+          />
         )} />
 
         <Route path="/requestride" render={() => (
-          <RideRequest />
+          <RideRequest
+            postFormData={this.state.postFormData}
+            handlePostSubmit={this.handlePostSubmit}
+            handlePostFormChange={this.handlePostFormChange}
+          />
         )} />
       </div>
     );

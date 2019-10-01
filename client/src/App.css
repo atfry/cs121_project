@@ -49,13 +49,9 @@ justify-content: center;
   color: white;
 }
 
-input {
+.riderequest {
   font-size: 22px;
-  color: #000;
-  padding: 18px 22px;
   font-size: 16px;
   margin-bottom: 17px;
-  border: 0;
   display: block;
-  width: 100%;  
 }

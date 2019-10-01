@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const logger = require('morgan');
 
 const { postRouter } = require('./routes/postRouter');
+const { userRouter } = require('.routes/userRouter')
 
 const app = express();
 app.use(cors());
@@ -15,7 +16,13 @@ app.get('/ping', (req, res) => {
   res.json('pong');
 });
 
+app.get('/', (req, res) => {
+  res.json({ message: 'It is working' })
+})
+
+
 app.use('/posts', postRouter);
+app.use('/users', userRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
