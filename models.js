@@ -1,4 +1,5 @@
 const { Sequelize } = require('sequelize');
+var express = require('express');
 
 const sequelize = new Sequelize({
   database: 'carpooldb',
@@ -7,6 +8,9 @@ const sequelize = new Sequelize({
     underscored: true,
   },
 });
+
+const router = express.Router();
+
 
 // MODEL FOR riders HERE...
 const Users = sequelize.define('users', {
@@ -23,7 +27,7 @@ const Posts = sequelize.define('posts', {
   time: Sequelize.STRING,
   seats: Sequelize.INTEGER,
   price: Sequelize.STRING,
-  stops: Sequalize.BOOLEAN,
+  stops: Sequelize.BOOLEAN,
   isDriver: Sequelize.BOOLEAN,
   postId: Sequelize.INTEGER,
 });
@@ -35,5 +39,6 @@ Posts.belongsTo(Users);
 module.exports = {
   Users,
   Posts,
-  sequelize
+  Sequelize,
+  router,
 };

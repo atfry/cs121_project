@@ -53,6 +53,7 @@ class App extends React.Component {
     }));
   }
 
+  // submits login form data and resets form
   handleLoginSubmit = async (ev) => {
     ev.preventDefault();
     this.setState({
@@ -65,6 +66,9 @@ class App extends React.Component {
     this.props.history.push('/home');
   }
 
+
+  // updates registerFormData state variable 
+  // with changes in the register form
   handleRegisterFormChange = (ev) => {
     const { name, value } = ev.target;
 
@@ -76,6 +80,8 @@ class App extends React.Component {
     }));
   }
 
+  // submits register form data and resets form
+  // routes to home page on submit
   handleRegisterSubmit = async (ev) => {
     ev.preventDefault();
     const user = await createUser(this.state.registerFormData);
@@ -91,6 +97,8 @@ class App extends React.Component {
     this.props.history.push('/home');
   }
 
+  // updates postFormData state variable 
+  // with changes in the post form
   handlePostFormChange = (ev) => {
     const { name, value } = ev.target;
     this.setState(prevState => ({
@@ -102,6 +110,7 @@ class App extends React.Component {
     console.log(this.postFormData);
   }
 
+  // submits post form data and resets form
   handlePostSubmit = async (ev) => {
     ev.preventDefault();
     const post = await createPost(this.state.postFormData);
@@ -118,6 +127,7 @@ class App extends React.Component {
       },
     }));
   }
+
 
   async componentDidMount() {
     const data = await ping();

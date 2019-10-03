@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const bcrypt = require('bcrypt');
-const { User } = require('../models');
+const { Users } = require('../models');
+const { genToken, restrict } = require('../auth.js');
 
 const SALT = 2
 const userRouter = Router();
@@ -13,7 +14,7 @@ userRouter.post('/', async (req, res) => {
   } = req.body;
 
   const pw_digest = await bcrypt.hash(password, SALT);
-  const user = await User.create({
+  const user = await Users.create({
     name,
     password_digest: pw_digest,
     email,
@@ -28,7 +29,7 @@ userRouter.post('/', async (req, res) => {
 userRouter.post('/login', async (req, res) => {
   try {
     const { name, password } = req.body;
-    const user = await User.findOne({ where: { name } });
+    const user = await Users.findOne({ where: { name } });
     const isValidPass = await bcrypt.compare(password, user.password_digest);
     if (isValidPass) {
       const { password_digest, ...userData } = user.dataValues;
@@ -48,5 +49,5 @@ userRouter.get('/verify', restrict, (req, res) => {
 });
 
 module.exports = {
-  userRouter,
+  userRouter
 };
