@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { User, Posts } = require('../models');
+const { Users, Posts } = require('../models');
 const { restrict } = require('../auth');
 
 const PostRouter = Router();
@@ -14,7 +14,7 @@ PostRouter.post('/', restrict, async (req, res) => {
 });
 
 PostRouter.get('/', async (req, res) => {
-  const posts = await Post.findAll();
+  const posts = await Posts.findAll();
   res.json({ posts });
 });
 
