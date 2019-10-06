@@ -23,13 +23,12 @@ const Users = sequelize.define('users', {
 const Posts = sequelize.define('posts', {
   origin: Sequelize.STRING,
   destination: Sequelize.STRING,
-  date: Sequelize.DATE,
+  date: Sequelize.DATEONLY,
   time: Sequelize.STRING,
   seats: Sequelize.INTEGER,
   price: Sequelize.STRING,
   stops: Sequelize.BOOLEAN,
   isDriver: Sequelize.BOOLEAN,
-  postId: Sequelize.INTEGER,
 });
 
 // RELATIONSHIP BETWEEN QUESTION AND ANSWER WILL BE ESTABLISHED HERE...
@@ -39,6 +38,6 @@ Posts.belongsTo(Users);
 module.exports = {
   Users,
   Posts,
-  Sequelize,
+  sequelize,
   router,
 };
