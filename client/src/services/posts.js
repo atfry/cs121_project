@@ -9,5 +9,5 @@ export const createPost = async (postData) => {
 export const fetchPosts = async () => {
   const resp = await api.get('/posts');
   console.log(resp);
-  return resp.data;
+  return resp.data.posts;
 }

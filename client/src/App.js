@@ -30,13 +30,13 @@ class App extends React.Component {
         email: ''
       },
       postFormData: {
-        driver: null,
+        driver: false,
         origin: '',
         destination: '',
         date: '',
         time: '',
         seats: '',
-        stops: null
+        stops: false
       },
       posts: []
     }
@@ -108,6 +108,16 @@ class App extends React.Component {
       },
     }));
     console.log(this.postFormData);
+  }
+
+  handleCheckbox = (e) => {
+    const { checked, name } = e.target;
+    this.setState(prevState => ({
+      postFormData: {
+        ...prevState.postFormData,
+        [name]: checked
+      }
+    }))
   }
 
   // submits post form data and resets form
@@ -201,6 +211,7 @@ class App extends React.Component {
 
         <Route path="/requestride" render={() => (
           <RideRequest
+            handleCheckbox={this.handleCheckbox}
             postFormData={this.state.postFormData}
             handlePostSubmit={this.handlePostSubmit}
             handlePostFormChange={this.handlePostFormChange}

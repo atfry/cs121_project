@@ -6,9 +6,9 @@ const PostRouter = Router();
 
 PostRouter.post('/', restrict, async (req, res) => {
   const post = await Posts.create(req.body);
-  // const user = await User.findByPk(res.locals.user.id);
+  const user = await Users.findByPk(res.locals.user.id);
 
-  // const ans = await post.setUser(user);
+  const ans = await post.setUser(user);
   console.log(ans.dataValues);
   res.json({ post });
 });
