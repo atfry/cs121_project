@@ -154,10 +154,11 @@ class App extends React.Component {
     this.props.history.push('/allrides');
   }
 
+  // calls deletePosts and filters through
+  // the posts in state to remove the deleted post
   handlePostDelete = async (e) => {
     e.preventDefault();
     const postId = e.target.name;
-    console.log(postId);
     await deletePosts(postId);
 
     this.setState(prevState => ({
@@ -166,6 +167,8 @@ class App extends React.Component {
     }))
   }
 
+  // calls updatePosts and maps through posts to update the post 
+  // with matching id with the edited form 
   handlePostUpdate = async (ev) => {
     ev.preventDefault();
     const { editId, postFormData } = this.state;
