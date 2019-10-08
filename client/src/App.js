@@ -6,7 +6,7 @@ import RegisterForm from './components/RegisterForm';
 import AllRides from './components/AllRides';
 import RideRequest from './components/RideRequest';
 import { Route, withRouter } from 'react-router-dom';
-import { createPost, fetchPosts } from './services/posts.js';
+import { createPost, fetchPosts, deletePosts, updatePosts } from './services/posts.js';
 import {
   ping,
   createUser,
@@ -38,6 +38,7 @@ class App extends React.Component {
         seats: '',
         stops: false
       },
+      editId: null,
       posts: []
     }
   }
@@ -97,6 +98,20 @@ class App extends React.Component {
     this.props.history.push('/home');
   }
 
+  handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.getItem('authToken');
+    localStorage.removeItem('authToken');
+    this.setState({
+      currentView: 'login',
+      loginFormData: {
+        name: '',
+        password: '',
+      }
+    })
+    this.props.history.push('/');
+  }
+
   // updates postFormData state variable 
   // with changes in the post form
   handlePostFormChange = (ev) => {
@@ -136,7 +151,58 @@ class App extends React.Component {
         stops: null
       },
     }));
+    this.props.history.push('/allrides');
   }
+
+  handlePostDelete = async (e) => {
+    e.preventDefault();
+    const postId = e.target.name;
+    console.log(postId);
+    await deletePosts(postId);
+
+    this.setState(prevState => ({
+      posts: prevState.posts.filter(post =>
+        post.id !== parseInt(postId))
+    }))
+  }
+
+  handlePostUpdate = async (ev) => {
+    ev.preventDefault();
+    const { editId, postFormData } = this.state;
+    const newPost = await updatePosts(editId, postFormData);
+    this.setState(prevState => ({
+      posts: prevState.posts.map(post => post.id === editId ? newPost : post),
+      editId: null,
+    }))
+  }
+
+  showEditForm = (id) => {
+    this.setState(prevState => {
+      const item = prevState.posts.find(post => post.id === id);
+      const {
+        driver,
+        origin,
+        destination,
+        date,
+        time,
+        seats,
+        stops,
+      } = item;
+      return {
+        postFormData: {
+          driver,
+          origin,
+          destination,
+          date,
+          time,
+          seats,
+          stops
+        },
+        editId: id,
+      };
+    })
+  }
+
 
 
   async componentDidMount() {
@@ -168,7 +234,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Nav />
+        <Nav
+          handleLogout={this.handleLogout}
+        />
         <Header />
         <Route exact path="/" render={() => (
           <>
@@ -206,6 +274,7 @@ class App extends React.Component {
         <Route path="/allrides" render={() => (
           <AllRides
             posts={this.state.posts}
+            handlePostDelete={this.handlePostDelete}
           />
         )} />
 

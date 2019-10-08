@@ -18,6 +18,37 @@ PostRouter.get('/', async (req, res) => {
   res.json({ posts });
 });
 
+PostRouter.delete('/:id', async (req, res) => {
+  try {
+    await Posts.destroy({
+      where: { id: req.params.id }
+    })
+    res.json(`Success, post ${req.params.id} has been destroyed`);
+  } catch (e) {
+    console.log(e);
+    res.status(401).send("Can't be deleted");
+  }
+})
+
+PostRouter.put('/:id', async (req, res) => {
+  try {
+    const data = req.body;
+    const id = parseInt(req.params.id);
+    await Posts.update(data, {
+      where: { id },
+    });
+    const post = await Posts.findOne({
+      where: { id },
+    });
+
+    res.json({ post });
+  } catch (e) {
+    console.log(e.message);
+    res.status(500).send(e.message);
+  }
+})
+
+
 module.exports = {
   PostRouter
 };

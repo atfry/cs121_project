@@ -49,9 +49,56 @@ justify-content: center;
   color: white;
 }
 
+#nav-bar a:hover{
+  color: black;
+}
+
+#nav-bar button:hover{
+  color: black;
+}
+
+#nav-bar button{
+  font-size: 16px;
+  background-color: rgb(61, 145, 131);
+  color: white;
+  border: none;
+}
+
+/* RIDE REQUEST PAGE */
 .riderequest {
   font-size: 22px;
   font-size: 16px;
   margin-bottom: 17px;
   display: block;
+}
+
+/* ALL RIDES PAGE */
+
+.eachride {
+  border: solid 1px #000;
+   
+  margin-top: 20px;
+  box-shadow: 10px 10px 5px grey;
+  font-family: 'Noto Sans', sans-serif;
+  background-image: linear-gradient(to right,rgb(135, 198, 187),rgb(135, 198, 187), white, rgb(135, 198, 187),rgb(135, 198, 187));
+
+  
+}
+
+.eachride button:hover{
+  background-color: black;
+  color: white;
+}
+
+.eachride button{
+  margin-bottom: 15px;
+  font-size: 12px;
+  font-family: 'Noto Sans', sans-serif;
+
+}
+
+.allrides h3 {
+  font-size: 25px;
+  font-family: 'Noto Sans', sans-serif;
+
 }
