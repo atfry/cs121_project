@@ -11,3 +11,8 @@ export const fetchPosts = async () => {
   console.log(resp);
   return resp.data.posts;
 }
+
+export const deletePosts = async (id) => {
+  const resp = await api.delete(`/posts/${id}`);
+  return resp.data;
+}

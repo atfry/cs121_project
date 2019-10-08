@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Nav = () => {
+const Nav = (props) => {
 
   return (
     <header>
@@ -9,7 +9,7 @@ const Nav = () => {
         <Link to="/home">Home</Link>
         <Link to="/allrides">All Rides</Link>
         <Link to="requestride">Post a Ride</Link>
-        <button>Log out</button>
+        <button onClick={props.handleLogout}>Log out</button>
       </nav>
     </header>
   )
