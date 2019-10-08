@@ -9,8 +9,11 @@ export default function AllRides(props) {
           <p>User: {post.userId}</p>
           <p>Origin: {post.origin}</p>
           <p>Destination: {post.destination}</p>
+
           <button name={post.id}
-            onClick={props.handlePostDelete}>Delete</button>
+            onClick={props.handlePostDelete}>Delete
+            </button>
+          <button>Edit</button>
         </div>
       ))}
     </div>
