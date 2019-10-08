@@ -5,7 +5,7 @@ export default function AllRides(props) {
     <div className="allrides">
       <h3>All Rides</h3>
       {props.posts && props.posts.map(post => (
-        <div key={post.id}>
+        <div key={post.id} className="eachride">
           <p>User: {post.userId}</p>
           <p>Origin: {post.origin}</p>
           <p>Destination: {post.destination}</p>
@@ -13,7 +13,7 @@ export default function AllRides(props) {
           <button name={post.id}
             onClick={props.handlePostDelete}>Delete
             </button>
-          <button>Edit</button>
+          <button onClick={() => props.showEditForm(post.id)}>Edit</button>
         </div>
       ))}
     </div>
