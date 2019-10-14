@@ -29,6 +29,8 @@ export default (props) => (
           onChange={props.handlePostFormChange}
         />
 
+        <br />
+
         <label htmlFor="destination">Destination</label>
         <input
           type="string"
@@ -39,6 +41,8 @@ export default (props) => (
           onChange={props.handlePostFormChange}
         />
 
+        <br />
+
         <label htmlFor="date">What day do you want to leave?</label>
         <input
           type="date"
@@ -47,6 +51,8 @@ export default (props) => (
           id="date"
           onChange={props.handlePostFormChange}
         />
+
+        <br />
 
         <label htmlFor="time">Time</label>
         <input
@@ -58,6 +64,8 @@ export default (props) => (
           onChange={props.handlePostFormChange}
         />
 
+        <br />
+
         <label htmlFor="seats">Seats</label>
         <input
           type="integer"
@@ -67,17 +75,21 @@ export default (props) => (
           id="seats"
           onChange={props.handlePostFormChange}
         />
+        
+        <br />
 
-        <label htmlFor="stops">Are you willing to make stops?</label>
+        <label htmlFor="stops"><span>  Are you willing to make stops?  </span></label>
         <label>
-          <input
+          <span> <input
             type="checkbox"
             name="stops"
             value={props.postFormData.stops}
             id="stops"
             onChange={props.handleCheckbox}
-          />Yes
+          /></span>Yes
           </label>
+
+          <br />
 
         <input
           type="submit"

@@ -14,6 +14,7 @@ import {
 } from './services/auth';
 import './App.css';
 import LoginForm from './components/LoginForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -39,7 +40,8 @@ class App extends React.Component {
         stops: false
       },
       editId: null,
-      posts: []
+      posts: [],
+      myRides: []
     }
   }
 
@@ -177,6 +179,13 @@ class App extends React.Component {
       posts: prevState.posts.map(post => post.id === editId ? newPost : post),
       editId: null,
     }))
+  }
+
+  joinRide = async (ev) => (post) => {
+    this.setState(prevState => ({
+      myRides: [...prevState.myRides, post],
+    }));
+    this.props.history.push('/allrides');
   }
 
   showEditForm = (id) => {
