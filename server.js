@@ -14,6 +14,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use('/posts', PostRouter);
 app.use('/users', userRouter);
+// app.use('/postgroups', postGroupsRouter);
 
 app.get('/ping', (req, res) => {
   res.json('pong');

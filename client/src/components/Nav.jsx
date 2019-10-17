@@ -8,7 +8,8 @@ const Nav = (props) => {
       <nav id="nav-bar">
         <Link to="/home">Home</Link>
         <Link to="/allrides">All Rides</Link>
-        <Link to="requestride">Post a Ride</Link>
+        <Link to="/requestride">Post a Ride</Link>
+        <Link to="/myrides">My Rides</Link>
         <button onClick={props.handleLogout}>Log out</button>
       </nav>
     </header>

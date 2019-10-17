@@ -16,10 +16,11 @@ export default function AllRides(props) {
           <p>User: {post.userId}</p>
 
           <Button variant="secondary" name={post.id}
-            onClick={props.handlePostDelete}>Delete
-            </Button>
+            onClick={props.handlePostDelete}>Delete</Button>
+
           <Button variant="secondary" onClick={() => props.showEditForm(post.id)}>Edit</Button>
-          <Button variant="secondary" onClick={() => props.joinRide(post)}>Join</Button>
+          <Button variant="secondary" onClick={() => props.handleJoinSubmit(post)}>Join</Button>
+        
         </div>
         </Card>
       ))}
