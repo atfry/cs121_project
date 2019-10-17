@@ -18,6 +18,11 @@ export const deletePosts = async (id) => {
 }
 
 export const updatePosts = async (id, posts) => {
-  const resp = await api.put(`/comments/${id}`, { posts });
+  const resp = await api.put(`/posts/${id}`, { posts });
   return resp.data.posts;
+}
+
+export const joinRides = async (userId, postId) => {
+  const resp = await api.put(`users/${userId}/posts/${postId}`)
+  return resp.data
 }

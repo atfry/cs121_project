@@ -4,9 +4,11 @@ import Home from './components/Home';
 import Nav from './components/Nav';
 import RegisterForm from './components/RegisterForm';
 import AllRides from './components/AllRides';
+import EditForm from './components/EditForm';
 import RideRequest from './components/RideRequest';
+import MyRides from './components/MyRides';
 import { Route, withRouter } from 'react-router-dom';
-import { createPost, fetchPosts, deletePosts, updatePosts } from './services/posts.js';
+import { createPost, fetchPosts, deletePosts, updatePosts, joinRides } from './services/posts.js';
 import {
   ping,
   createUser,
@@ -39,7 +41,9 @@ class App extends React.Component {
         stops: false
       },
       editId: null,
-      posts: []
+      posts: [],
+      joinedPosts: [],
+      currentUser: null,
     }
   }
 
@@ -153,6 +157,17 @@ class App extends React.Component {
     }));
     this.props.history.push('/allrides');
   }
+
+  handleJoinSubmit = async (e) => {
+    e.preventDefault();
+    const postId = e.target.name;
+    this.setState(prevState => ({
+      joinedPosts: prevState.posts.filter(post =>
+        post.id !== parseInt(postId))
+    }))
+    this.props.history.push("/myrides")
+  }
+
 
   // calls deletePosts and filters through
   // the posts in state to remove the deleted post
@@ -274,12 +289,28 @@ class App extends React.Component {
           <Home />
         )} />
 
+        <Route path="/myrides" render={() => (
+          <MyRides
+            joinedPosts={this.state.joinedPosts}
+          />
+        )} />
+
         <Route path="/allrides" render={() => (
           <AllRides
             posts={this.state.posts}
             handlePostDelete={this.handlePostDelete}
+            showEditForm={this.showEditForm}
+            handleJoinSubmit={this.handleJoinSubmit}
           />
         )} />
+        {this.state.editId && (
+          <EditForm
+            handlePostUpdate={this.handlePostUpdate}
+            handleCheckbox={this.handleCheckbox}
+            postFormData={this.state.postFormData}
+            handlePostFormChange={this.handlePostFormChange}
+          />
+        )}
 
         <Route path="/requestride" render={() => (
           <RideRequest

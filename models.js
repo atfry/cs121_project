@@ -29,15 +29,26 @@ const Posts = sequelize.define('posts', {
   price: Sequelize.STRING,
   stops: Sequelize.BOOLEAN,
   isDriver: Sequelize.BOOLEAN,
+  joinedUsers: Sequelize.STRING
 });
 
-// RELATIONSHIP BETWEEN QUESTION AND ANSWER WILL BE ESTABLISHED HERE...
+// const PostGroups = sequelize.define('postgroups', {
+//   user_id: Sequelize.INTEGER,
+//   post_id: Sequelize.INTEGER,
+// })
+
+// RELATIONSHIP BETWEEN Posts AND Users WILL BE Post Groups HERE...
 Users.hasMany(Posts);
 Posts.belongsTo(Users);
+// PostGroups.hasMany(Users);
+// PostGroups.belongsTo(Users);
+// PostGroups.hasMany(Posts);
+
 
 module.exports = {
   Users,
   Posts,
+  // PostGroups,
   sequelize,
   router,
 };

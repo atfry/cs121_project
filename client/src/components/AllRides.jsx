@@ -14,6 +14,7 @@ export default function AllRides(props) {
             onClick={props.handlePostDelete}>Delete
             </button>
           <button onClick={() => props.showEditForm(post.id)}>Edit</button>
+          <button onClick={() => props.handleJoinSubmit(post)}>Join</button>
         </div>
       ))}
     </div>
