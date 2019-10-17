@@ -196,12 +196,6 @@ class App extends React.Component {
     }))
   }
 
-  joinRide = async (ev) => (post) => {
-    this.setState(prevState => ({
-      myRides: [...prevState.myRides, post],
-    }));
-    this.props.history.push('/allrides');
-  }
 
   showEditForm = (id) => {
     this.setState(prevState => {
