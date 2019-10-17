@@ -29,7 +29,6 @@ export default (props) => (
           value="Log In"
         />
 
-
       </form>
 
     </div>
