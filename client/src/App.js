@@ -222,6 +222,7 @@ class App extends React.Component {
         editId: id,
       };
     })
+    console.log(this.state.posts);
   }
 
 
