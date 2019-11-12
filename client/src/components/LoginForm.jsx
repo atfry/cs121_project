@@ -24,10 +24,10 @@ export default (props) => (
           onChange={props.handleLoginFormChange}
         />
 
-        <input
+        <div className="submit"><input
           type="submit"
           value="Log In"
-        />
+        /></div>
 
       </form>
 

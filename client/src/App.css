@@ -72,6 +72,32 @@ justify-content: center;
   display: block;
 }
 
+.riderequest h3 {
+  margin-top: 55px;
+  font-weight: 599;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.riderequest .post {
+  box-shadow: 4px 13px 36px 5px #373838;
+  background-color: rgb(137, 208, 196);
+  margin-left: 250px;
+  margin-right: 250px;
+  margin-top: 35px;
+  padding-top: 15px;
+}
+.post label {
+  font-weight: 600;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.post input {
+  margin-bottom: 10px;
+  margin-left: 10px;
+  border-radius: 5px 5px 5px 5px;
+  font-family: 'Noto Sans', sans-serif;
+}
+
 /* ALL RIDES PAGE */
 
 .eachride {
@@ -101,4 +127,112 @@ justify-content: center;
   font-size: 25px;
   font-family: 'Noto Sans', sans-serif;
 
+}
+
+/* REGISTER SECTION */
+.registerform {
+  box-shadow: 4px 13px 36px 5px #373838;
+  background-color: rgb(135, 198, 187);
+  display: block;
+  margin-top: 25px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  margin-left: 250px; 
+  margin-right: 250px;
+  margin-bottom: 20px;
+}
+
+.registerform h3 {
+  font-size: 28px;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.registerform label {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 600;
+}
+
+.registerform input {
+  display: block;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  margin-left: 430px;
+  margin-bottom: 10px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+.registerform .submit {
+  margin-left: 50px;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.submit input:hover{
+  background-color: rgb(29, 109, 96);
+  color: white;
+}
+
+.App button {
+  font-family: 'Noto Sans', sans-serif;
+  border-radius: 5px 5px 5px 5px;
+
+}
+
+.App button:hover{
+  background-color: rgb(29, 109, 96);
+  color: white;
+}
+
+
+.register form {
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  margin-left: 150px;
+}
+
+/* LOGIN SECTION */
+
+.login form {
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  margin-left: 150px;
+}
+
+.loginform {
+  box-shadow: 4px 13px 36px 5px #373838;
+  background-color: rgb(135, 198, 187);
+  display: block;
+  margin-top: 25px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  margin-left: 250px; 
+  margin-right: 250px;
+  margin-bottom: 20px;
+}
+
+.loginform h3 {
+  font-size: 28px;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.loginform label {
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 600;
+}
+
+.loginform input {
+  display: block;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  margin-left: 430px;
+  margin-bottom: 10px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+.loginform .submit {
+  margin-left: 50px;
+  font-family: 'Noto Sans', sans-serif;
 }

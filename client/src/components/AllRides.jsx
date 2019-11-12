@@ -13,8 +13,9 @@ export default function AllRides(props) {
             <Card.Img variant="top" src="holder.js/100px180" />
             <div key={post.id} className="eachride">
               <Card.Title> From {post.origin} to {post.destination} </Card.Title>
-              <p>User: {post.userId}</p>
-
+              <p>User: {post.id}</p>
+              <p>Date: {post.date}, {post.time}</p>
+              <p>Seats: {post.seats}</p>
               <Button variant="secondary" name={post.id} onClick={props.handlePostDelete}>Delete</Button>
 
               <Button variant="secondary" onClick={() => props.showEditForm(post.id)}>Edit</Button>

@@ -75,7 +75,7 @@ export default (props) => (
           id="seats"
           onChange={props.handlePostFormChange}
         />
-        
+
         <br />
 
         <label htmlFor="stops"><span>  Are you willing to make stops?  </span></label>
@@ -89,12 +89,12 @@ export default (props) => (
           /></span>Yes
           </label>
 
-          <br />
+        <br />
 
-        <input
+        <div className="submit"><input
           type="submit"
           value="Post"
-        />
+        /></div>
       </form>
     </div>
   </>

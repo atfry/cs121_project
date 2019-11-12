@@ -33,10 +33,10 @@ export default (props) => (
           onChange={props.handleRegisterFormChange}
         />
 
-        <input
+        <div className="submit"><input
           type="submit"
           value="Sign Up"
-        />
+        /></div>
 
       </form>
     </div>

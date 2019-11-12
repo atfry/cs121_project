@@ -32,23 +32,23 @@ const Posts = sequelize.define('posts', {
   joinedUsers: Sequelize.STRING
 });
 
-// const PostGroups = sequelize.define('postgroups', {
-//   user_id: Sequelize.INTEGER,
-//   post_id: Sequelize.INTEGER,
-// })
+
+const PostGroups = sequelize.define('postgroups', {
+  user_id: Sequelize.INTEGER,
+  post_id: Sequelize.INTEGER,
+})
 
 // RELATIONSHIP BETWEEN Posts AND Users WILL BE Post Groups HERE...
 Users.hasMany(Posts);
 Posts.belongsTo(Users);
-// PostGroups.hasMany(Users);
-// PostGroups.belongsTo(Users);
-// PostGroups.hasMany(Posts);
+PostGroups.hasMany(Users);
+PostGroups.belongsTo(Users);
 
 
 module.exports = {
   Users,
   Posts,
-  // PostGroups,
+  PostGroups,
   sequelize,
   router,
 };
