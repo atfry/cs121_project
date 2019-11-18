@@ -36,7 +36,7 @@ const Posts = sequelize.define('posts', {
 
 const PostGroups = sequelize.define('postgroups', {
   user_id: Sequelize.INTEGER,
-  post_id: Sequelize.INTEGER,
+  post_id: Sequelize.STRING,
 })
 
 // RELATIONSHIP BETWEEN Posts AND Users WILL BE Post Groups HERE...

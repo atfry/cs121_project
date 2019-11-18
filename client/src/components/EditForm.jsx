@@ -4,7 +4,7 @@ export default (props) => {
   return (
     <div>
       <h3>Edit Form</h3>
-      <form onSubmit={props.handlePostUpdate}>
+      <form className="post" onSubmit={props.handlePostUpdate}>
         <label htmlFor="driver">Are you driving?</label>
         <label>
           <input

@@ -8,7 +8,7 @@ import EditForm from './components/EditForm';
 import RideRequest from './components/RideRequest';
 import MyRides from './components/MyRides';
 import { Route, withRouter } from 'react-router-dom';
-import { createPost, fetchPosts, deletePosts, updatePosts, joinRides } from './services/posts.js';
+import { createPost, fetchPosts, deletePosts, updatePosts, joinRides, fetchJoinedRides } from './services/posts.js';
 import {
   ping,
   createUser,
@@ -157,7 +157,7 @@ class App extends React.Component {
         time: '',
         seats: '',
         stops: null,
-        user_id: this.state.currentUser.id
+        user_id: this.state.currentUserID
       },
     }));
     this.props.history.push('/allrides');
@@ -166,6 +166,7 @@ class App extends React.Component {
   handleJoinSubmit = async (e) => {
     e.preventDefault();
     const postId = e.target.name;
+    await joinRides({user_id: this.state.currentUserID, post_id: postId});
     this.setState(prevState => ({
       joinedPosts: prevState.posts.filter(post =>
         post.id !== parseInt(postId))
@@ -258,8 +259,13 @@ class App extends React.Component {
     }
     const posts = await fetchPosts();
     this.setState({
-      posts
+      posts: posts
     });
+    const joinedPosts = await fetchJoinedRides();
+    this.setState({
+      joinedPosts: joinedPosts
+    });
+    console.log(joinedPosts);
   }
 
   toggleAuthView = () => {
