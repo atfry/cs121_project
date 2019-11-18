@@ -39,12 +39,14 @@ class App extends React.Component {
         date: '',
         time: '',
         seats: '',
-        stops: false
+        stops: false,
+        user_id: ''
       },
       editId: null,
       posts: [],
       joinedPosts: [],
       currentUser: null,
+      currentUserID: null,
       myRides: []
     }
   }
@@ -154,7 +156,8 @@ class App extends React.Component {
         date: '',
         time: '',
         seats: '',
-        stops: null
+        stops: null,
+        user_id: this.state.currentUser.id
       },
     }));
     this.props.history.push('/allrides');
@@ -208,6 +211,7 @@ class App extends React.Component {
         time,
         seats,
         stops,
+        user_id
       } = item;
       return {
         postFormData: {
@@ -217,7 +221,8 @@ class App extends React.Component {
           date,
           time,
           seats,
-          stops
+          stops,
+          user_id
         },
         editId: id,
       };
@@ -232,7 +237,18 @@ class App extends React.Component {
     const user = await verifyToken();
     if (user) {
       this.setState({
+        postFormData: {
+        driver: false,
+        origin: '',
+        destination: '',
+        date: '',
+        time: '',
+        seats: '',
+        stops: false,
+        user_id: user.id
+      },
         currentUser: user,
+        currentUserID: user.id,
       })
     }
     try {
@@ -302,6 +318,7 @@ class App extends React.Component {
         <Route path="/allrides" render={() => (
           <AllRides
             posts={this.state.posts}
+            currentUserID={this.state.currentUserID}
             handlePostDelete={this.handlePostDelete}
             showEditForm={this.showEditForm}
             handleJoinSubmit={this.handleJoinSubmit}

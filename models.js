@@ -29,7 +29,8 @@ const Posts = sequelize.define('posts', {
   price: Sequelize.STRING,
   stops: Sequelize.BOOLEAN,
   isDriver: Sequelize.BOOLEAN,
-  joinedUsers: Sequelize.STRING
+  joinedUsers: Sequelize.STRING,
+  user_id: Sequelize.STRING
 });
 
 
