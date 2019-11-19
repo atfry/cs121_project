@@ -8,7 +8,7 @@ import EditForm from './components/EditForm';
 import RideRequest from './components/RideRequest';
 import MyRides from './components/MyRides';
 import { Route, withRouter } from 'react-router-dom';
-import { createPost, fetchPosts, deletePosts, updatePosts, joinRides, fetchJoinedRides } from './services/posts.js';
+import { createPost, fetchPosts, deletePosts, updatePosts, joinRides, fetchJoinedRides, leaveRide } from './services/posts.js';
 import {
   ping,
   createUser,
@@ -161,8 +161,9 @@ class App extends React.Component {
       },
     }));
     this.props.history.push('/allrides');
-  }
+  } 
 
+  // calls joinRides which tells the server to add an entry to the postgroups database
   handleJoinSubmit = async (e) => {
     e.preventDefault();
     const postId = e.target.name;
@@ -174,6 +175,18 @@ class App extends React.Component {
     this.props.history.push("/myrides")
   }
 
+  // uses leaveRide to delete a specific entry from the postgroups relation
+  // removes the joined ride from the joinedPosts list as well
+  handleRideLeaving = async (e) => {
+    e.preventDefault();
+    const postId = e.target.name;
+    await leaveRide(postId);
+    
+    this.setState(prevState => ({
+      joinedPosts: prevState.joinedPosts.filter(ride =>
+        ride.id !== parseInt(postId))
+    }))
+  }
 
   // calls deletePosts and filters through
   // the posts in state to remove the deleted post
@@ -317,7 +330,10 @@ class App extends React.Component {
 
         <Route path="/myrides" render={() => (
           <MyRides
+            posts={this.state.posts}
+            currentUserID={this.state.currentUserID}
             joinedPosts={this.state.joinedPosts}
+            handleRideLeaving = {this.handleRideLeaving}
           />
         )} />
 

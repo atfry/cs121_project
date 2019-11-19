@@ -42,8 +42,8 @@ const PostGroups = sequelize.define('postgroups', {
 // RELATIONSHIP BETWEEN Posts AND Users WILL BE Post Groups HERE...
 Users.hasMany(Posts);
 Posts.belongsTo(Users);
-PostGroups.hasMany(Users);
-PostGroups.belongsTo(Users);
+// PostGroups.hasMany(Users);
+// PostGroups.belongsTo(Users);
 
 
 module.exports = {

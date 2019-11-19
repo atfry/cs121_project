@@ -31,5 +31,10 @@ export const joinRides = async (joinData) => {
 export const fetchJoinedRides = async () => {
   const resp = await api.get('/postgroups');
   console.log(resp);
+  return resp.data.posts;
+}
+
+export const leaveRide = async (id) => {
+  const resp = await api.delete(`/postgroups/${id}`);
   return resp.data;
 }

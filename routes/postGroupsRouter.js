@@ -14,6 +14,18 @@ postGroupsRouter.get('/', async (req, res) => {
     res.json({ posts });
   });
 
+postGroupsRouter.delete('/:id', async (req, res) => {
+    try {
+        await PostGroups.destroy({
+            where: { id: req.params.id }
+        })
+        res.json(`Success, post ${req.params.id} has been destroyed`);
+    } catch (e) {
+        console.log(e);
+        res.status(401).send("Can't be deleted");
+    }
+});
+
 module.exports = {
     postGroupsRouter
 };
