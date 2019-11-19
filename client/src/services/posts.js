@@ -2,7 +2,7 @@ import { api } from './auth.js';
 
 export const createPost = async (postData) => {
   const resp = await api.post('/posts', postData);
-  console.log(resp);
+  console.log(resp.data);
   return resp.data;
 };
 
@@ -22,7 +22,19 @@ export const updatePosts = async (id, posts) => {
   return resp.data.posts;
 }
 
-export const joinRides = async (userId, postId) => {
-  const resp = await api.put(`users/${userId}/posts/${postId}`)
-  return resp.data
+export const joinRides = async (joinData) => {
+  const resp = await api.post('/postgroups', joinData);
+  console.log(resp);
+  return resp.data;
+};
+
+export const fetchJoinedRides = async () => {
+  const resp = await api.get('/postgroups');
+  console.log(resp);
+  return resp.data.posts;
+}
+
+export const leaveRide = async (id) => {
+  const resp = await api.delete(`/postgroups/${id}`);
+  return resp.data;
 }
