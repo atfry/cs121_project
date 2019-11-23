@@ -12,7 +12,8 @@ import { createPost, fetchPosts, deletePosts, updatePosts, joinRides, fetchJoine
 import {
   ping,
   createUser,
-  verifyToken,
+  loginUser,
+  verifyToken
 } from './services/auth';
 import './App.css';
 import LoginForm from './components/LoginForm';
@@ -65,11 +66,14 @@ class App extends React.Component {
   // submits login form data and resets form
   handleLoginSubmit = async (ev) => {
     ev.preventDefault();
+    const user = await loginUser(this.state.loginFormData);
     this.setState({
       loginFormData: {
         username: '',
         password: '',
-      }
+      },
+      currentUser: user,
+      currentUserID: user.id
     })
     console.log(this.loginFormData);
     this.props.history.push('/home');
