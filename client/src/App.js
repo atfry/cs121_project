@@ -282,7 +282,18 @@ class App extends React.Component {
     this.setState({
       joinedPosts: joinedPosts
     });
-    console.log(joinedPosts);
+
+    var myRides = [];
+    for (var i=0, len=joinedPosts.length; i<len; i++){
+      if (joinedPosts[i].user_id === this.state.currentUserID){
+        myRides.push(joinedPosts[i].post_id);
+      }
+    }
+
+    this.setState({
+      myRides:myRides
+    });
+    console.log(this.state.myRides);
   }
 
   toggleAuthView = () => {
@@ -345,6 +356,7 @@ class App extends React.Component {
           <AllRides
             posts={this.state.posts}
             currentUserID={this.state.currentUserID}
+            myRides={this.state.myRides}
             handlePostDelete={this.handlePostDelete}
             showEditForm={this.showEditForm}
             handleJoinSubmit={this.handleJoinSubmit}

@@ -30,7 +30,6 @@ export const joinRides = async (joinData) => {
 
 export const fetchJoinedRides = async () => {
   const resp = await api.get('/postgroups');
-  console.log(resp);
   return resp.data.posts;
 }
 

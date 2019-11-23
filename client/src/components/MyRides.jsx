@@ -14,7 +14,7 @@ export default function AllRides(props) {
               <div key={joined.id}> 
               { (post.id == joined.post_id || post.user_id === props.currentUserID)?(
                 <div>
-                  { (props.currentUserID === joined.user_id || props.currentUserID === post.user_id)? (
+                  { ((props.currentUserID === joined.user_id || props.currentUserID === post.user_id))? (
                     <Card>
                       <Card.Img variant="top" src="holder.js/100px180" />
                       <div className="eachride">
