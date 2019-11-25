@@ -13,7 +13,7 @@ export default function AllRides(props) {
       <CardDeck>
         {props.posts && props.posts.map(post => (
           <div>
-            {(props.myRides.indexOf(post.id.toString()) === -1)?(
+            {(props.myRides.indexOf(post.id.toString()) === -1 || post.user_id == props.currentUserID)?(
               <Card>
                 <Card.Img variant="top" src="holder.js/100px180" />
                 <div key={post.user_id} className="eachride">
@@ -25,7 +25,7 @@ export default function AllRides(props) {
                   { (props.currentUserID === post.user_id)?(<div>
                     <Button variant="secondary" name={post.id} onClick={props.handlePostDelete}>Delete</Button>
                     <Button variant="secondary" onClick={() => props.showEditForm(post.id)}>Edit</Button></div>):
-                    <Button variant="secondary" name={post.id} onClick={props.handleJoinSubmit}>Join</Button>}
+                    <Button variant="secondary" name={post.id} post={post} onClick={props.handleJoinSubmit}>Join</Button>}
                   </div>
 
                 </div>

@@ -18,22 +18,27 @@ export const deletePosts = async (id) => {
 }
 
 export const updatePosts = async (id, posts) => {
+  console.log(posts);
   const resp = await api.put(`/posts/${id}`, { posts });
-  return resp.data.posts;
+  return resp.data.post;
 }
 
-export const joinRides = async (joinData) => {
+export const joinRides = async (joinData, posts) => {
+  console.log(posts);
   const resp = await api.post('/postgroups', joinData);
-  console.log(resp);
+  const resp2 = await api.put(`/posts/${joinData.post_id}`, {posts});
+  console.log(resp2);
   return resp.data;
 };
 
 export const fetchJoinedRides = async () => {
   const resp = await api.get('/postgroups');
+  console.log(resp);
   return resp.data.posts;
 }
 
-export const leaveRide = async (id) => {
+export const leaveRide = async (id, posts, post_id) => {
   const resp = await api.delete(`/postgroups/${id}`);
+  const resp2 = await api.put(`/posts/${post_id}`, {posts});
   return resp.data;
 }

@@ -134,7 +134,6 @@ class App extends React.Component {
         [name]: value
       },
     }));
-    console.log(this.postFormData);
   }
 
   handleCheckbox = (e) => {
@@ -164,6 +163,30 @@ class App extends React.Component {
         user_id: this.state.currentUserID
       },
     }));
+    const posts = await fetchPosts();
+    this.setState({
+      posts: posts
+    });
+    const joinedPosts = await fetchJoinedRides();
+    this.setState({
+      joinedPosts: joinedPosts
+    });
+
+    var myRides = [];
+    for (var i=0, len=joinedPosts.length; i<len; i++){
+      if (joinedPosts[i].user_id === this.state.currentUserID){
+        myRides.push(joinedPosts[i].post_id);
+      }
+    }
+    for (var i=0, len=posts.length; i < len; i++){
+      if (posts[i].user_id === this.state.currentUserID){
+        myRides.push(posts[i].id.toString());
+      }
+    }
+
+    this.setState({
+      myRides:myRides
+    });
     this.props.history.push('/allrides');
   } 
 
@@ -171,7 +194,9 @@ class App extends React.Component {
   handleJoinSubmit = async (e) => {
     e.preventDefault();
     const postId = e.target.name;
-    await joinRides({user_id: this.state.currentUserID, post_id: postId});
+    const post = this.state.posts.find(post => post.id == postId);
+    post.seats = post.seats - 1;
+    await joinRides({user_id: this.state.currentUserID, post_id: postId}, post);
     this.setState(prevState => ({
       joinedPosts: prevState.posts.filter(post =>
         post.id !== parseInt(postId))
@@ -182,9 +207,11 @@ class App extends React.Component {
   // uses leaveRide to delete a specific entry from the postgroups relation
   // removes the joined ride from the joinedPosts list as well
   handleRideLeaving = async (e) => {
-    e.preventDefault();
-    const postId = e.target.name;
-    await leaveRide(postId);
+    console.log(this.state.currentUserID);
+    const postId = this.state.joinedPosts.find(post => (post.post_id === e.target.name && post.user_id === this.state.currentUserID)).id;
+    const post = this.state.posts.find(post => post.id == e.target.name);
+    post.seats = post.seats + 1;
+    await leaveRide(postId, post, e.target.name);
     
     this.setState(prevState => ({
       joinedPosts: prevState.joinedPosts.filter(ride =>
@@ -211,6 +238,31 @@ class App extends React.Component {
     ev.preventDefault();
     const { editId, postFormData } = this.state;
     const newPost = await updatePosts(editId, postFormData);
+    console.log(newPost);
+    const posts = await fetchPosts();
+    this.setState({
+      posts: posts
+    });
+    const joinedPosts = await fetchJoinedRides();
+    this.setState({
+      joinedPosts: joinedPosts
+    });
+
+    var myRides = [];
+    for (var i=0, len=joinedPosts.length; i<len; i++){
+      if (joinedPosts[i].user_id === this.state.currentUserID){
+        myRides.push(joinedPosts[i].post_id);
+      }
+    }
+    for (var i=0, len=posts.length; i < len; i++){
+      if (posts[i].user_id === this.state.currentUserID){
+        myRides.push(posts[i].id.toString());
+      }
+    }
+
+    this.setState({
+      myRides:myRides
+    });
     this.setState(prevState => ({
       posts: prevState.posts.map(post => post.id === editId ? newPost : post),
       editId: null,
@@ -289,11 +341,15 @@ class App extends React.Component {
         myRides.push(joinedPosts[i].post_id);
       }
     }
+    for (var i=0, len=posts.length; i < len; i++){
+      if (posts[i].user_id === this.state.currentUserID){
+        myRides.push(posts[i].id.toString());
+      }
+    }
 
     this.setState({
       myRides:myRides
     });
-    console.log(this.state.myRides);
   }
 
   toggleAuthView = () => {
@@ -347,7 +403,7 @@ class App extends React.Component {
           <MyRides
             posts={this.state.posts}
             currentUserID={this.state.currentUserID}
-            joinedPosts={this.state.joinedPosts}
+            myRides={this.state.myRides}
             handleRideLeaving = {this.handleRideLeaving}
           />
         )} />
