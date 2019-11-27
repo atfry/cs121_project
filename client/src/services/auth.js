@@ -25,6 +25,7 @@ export const createUser = async (userData) => {
 };
 
 export const loginUser = async (userData) => {
+  console.log(userData);
   const resp = await api.post('/users/login', userData);
   const { user, token } = resp.data;
   storeToken(token);

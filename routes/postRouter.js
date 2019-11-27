@@ -33,14 +33,21 @@ PostRouter.delete('/:id', async (req, res) => {
 PostRouter.put('/:id', async (req, res) => {
   try {
     const data = req.body;
+    console.log(data);
     const id = parseInt(req.params.id);
-    await Posts.update(data, {
-      where: { id },
+    await Posts.update(
+      {origin: data.posts.origin,
+        destination: data.posts.destination,
+        date: data.posts.date,
+        time: data.posts.time,
+        seats: data.posts.seats,
+        stops: data.posts.stops}, 
+      {where: { id },
     });
     const post = await Posts.findOne({
       where: { id },
     });
-
+    console.log(post);
     res.json({ post });
   } catch (e) {
     console.log(e.message);
