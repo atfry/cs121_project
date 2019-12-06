@@ -5,6 +5,7 @@ const { restrict } = require('../auth');
 const PostRouter = Router();
 
 PostRouter.post('/', restrict, async (req, res) => {
+  console.log(req.body);  
   const post = await Posts.create(req.body);
   const user = await Users.findByPk(res.locals.user.id);
 

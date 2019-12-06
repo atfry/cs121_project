@@ -17,7 +17,7 @@ export default function AllRides(props) {
                       <Card.Img variant="top" src="holder.js/100px180" />
                       <div className="eachride">
                         <Card.Title> From {post.origin} to {post.destination} </Card.Title>
-                        <p>User: {post.user_id}</p>
+                        <p>User: {post.user_name}</p>
                         <p>Date: {post.date}, {post.time}</p>
                         <p>Seats: {post.seats}</p>
                         { (props.currentUserID === post.user_id)?(<div>

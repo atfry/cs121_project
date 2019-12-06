@@ -7,6 +7,7 @@ import AllRides from './components/AllRides';
 import EditForm from './components/EditForm';
 import RideRequest from './components/RideRequest';
 import MyRides from './components/MyRides';
+import SearchResults from './components/SearchResults';
 import { Route, withRouter } from 'react-router-dom';
 import { createPost, fetchPosts, deletePosts, updatePosts, joinRides, fetchJoinedRides, leaveRide } from './services/posts.js';
 import {
@@ -41,13 +42,21 @@ class App extends React.Component {
         time: '',
         seats: '',
         stops: false,
-        user_id: ''
+        user_id: '',
+        user_name: '',
+      },
+      filterFormData:{
+        origin: '',
+        destination: '',
+        date: '',
       },
       editId: null,
       posts: [],
       joinedPosts: [],
+      filteredPosts: [],
       currentUser: null,
       currentUserID: null,
+      currentUserName: null,
       myRides: []
     }
   }
@@ -73,7 +82,8 @@ class App extends React.Component {
         password: '',
       },
       currentUser: user,
-      currentUserID: user.id
+      currentUserID: user.id,
+      currentUserName: user.name
     })
     console.log(this.loginFormData);
     this.props.history.push('/home');
@@ -160,7 +170,8 @@ class App extends React.Component {
         time: '',
         seats: '',
         stops: null,
-        user_id: this.state.currentUserID
+        user_id: this.state.currentUserID,
+        user_name: this.state.currentUserName,
       },
     }));
     const posts = await fetchPosts();
@@ -281,7 +292,8 @@ class App extends React.Component {
         time,
         seats,
         stops,
-        user_id
+        user_id,
+        user_name
       } = item;
       return {
         postFormData: {
@@ -292,7 +304,8 @@ class App extends React.Component {
           time,
           seats,
           stops,
-          user_id
+          user_id,
+          user_name
         },
         editId: id,
       };
@@ -300,7 +313,47 @@ class App extends React.Component {
     console.log(this.state.posts);
   }
 
+  handleFilterFormChange = (ev) => {
+    const { name, value } = ev.target;
+    this.setState(prevState => ({
+      filterFormData: {
+        ...prevState.filterFormData,
+        [name]: value
+      },
+    }));
+  }
 
+  handleFilterSubmit = (e) => {
+    var filteredPosts = []
+    for (var i=0, len=this.state.posts.length; i < len; i++){
+      if ((this.state.posts[i].destination === this.state.filterFormData.destination || this.state.filterFormData.destination === '') &&
+          (this.state.posts[i].origin === this.state.filterFormData.origin || this.state.filterFormData.origin === '') &&
+          (this.state.posts[i].date === this.state.filterFormData.date || this.state.filterFormData.destination === '')){
+        filteredPosts.push(this.state.posts[i]);
+      }
+    }
+    this.setState({
+      filterFormData:{
+        origin: '',
+        destination: '',
+        date: '',
+      },
+      filteredPosts: filteredPosts
+    });
+    this.props.history.push("/searchresults");
+  }
+
+  handleFilterClear = (e) => {
+    this.setState({
+      filterFormData:{
+        origin: '',
+        destination: '',
+        date: '',
+      },
+      filteredPosts: []
+    });
+    this.props.history.push("/allrides");
+  }
 
   async componentDidMount() {
     const data = await ping();
@@ -315,10 +368,12 @@ class App extends React.Component {
         time: '',
         seats: '',
         stops: false,
-        user_id: user.id
+        user_id: user.id,
+        user_name: user.name
       },
         currentUser: user,
         currentUserID: user.id,
+        currentUserName: user.name
       })
     }
     try {
@@ -330,6 +385,7 @@ class App extends React.Component {
     this.setState({
       posts: posts
     });
+    console.log(posts);
     const joinedPosts = await fetchJoinedRides();
     this.setState({
       joinedPosts: joinedPosts
@@ -416,6 +472,9 @@ class App extends React.Component {
             handlePostDelete={this.handlePostDelete}
             showEditForm={this.showEditForm}
             handleJoinSubmit={this.handleJoinSubmit}
+            filterFormData={this.state.filterFormData}
+            handleFilterFormChange={this.handleFilterFormChange}
+            handleFilterSubmit={this.handleFilterSubmit}
           />
         )} />
         {this.state.editId && (
@@ -426,6 +485,22 @@ class App extends React.Component {
             handlePostFormChange={this.handlePostFormChange}
           />
         )}
+
+        <Route path="/searchresults" render={() => (
+          <SearchResults
+            filterFormData={this.filterFormData}
+            handleFilterFormChange={this.handleFilterFormChange}
+            handleFilterSubmit={this.handleFilterSubmit}
+            filteredPosts={this.state.filteredPosts}
+            currentUserID={this.state.currentUserID}
+            filterFormData={this.state.filterFormData}
+            myRides={this.state.myRides}
+            handlePostDelete={this.handlePostDelete}
+            showEditForm={this.showEditForm}
+            handleJoinSubmit={this.handleJoinSubmit}
+            handleFilterClear={this.handleFilterClear}
+          />
+        )} />
 
         <Route path="/requestride" render={() => (
           <RideRequest

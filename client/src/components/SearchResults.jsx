@@ -6,13 +6,10 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 
-export default function AllRides(props) {
-  // The posts now hold the user id associated with a post
-  // This render function only makes the delete and edit buttons show up if the post's user_id match the current user id
-  // The join button only shows up if the post user_id and current user id don't match
+export default function SearchResults(props) {
   return (
-    <div className="allrides">
-      <h2>All Rides</h2>
+    <div className="searchresults">
+      <h2>Search Results</h2>
       <div className="filterform">
       <br />
       <Container>
@@ -49,6 +46,9 @@ export default function AllRides(props) {
           <Col>
             <Button variant="secondary" onClick={props.handleFilterSubmit}>Filter</Button>
           </Col>
+          <Col>
+            <Button variant="secondary" onClick={props.handleFilterClear}>Clear Filters</Button>
+          </Col>
         </Form.Row>
       </Form>
       </Container>
@@ -56,7 +56,7 @@ export default function AllRides(props) {
       </div>
 
       <CardDeck>
-        {props.posts && props.posts.map(post => (
+        {props.filteredPosts && props.filteredPosts.map(post => (
           <div>
             {(props.myRides.indexOf(post.id.toString()) === -1 || post.user_id == props.currentUserID)?(
               <Card>

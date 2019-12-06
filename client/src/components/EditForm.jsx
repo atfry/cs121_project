@@ -3,7 +3,7 @@ import React from 'react'
 export default (props) => {
   return (
     <div>
-      <h3>Edit Form</h3>
+      <h3>Edit Your Post</h3>
       <form className="post" onSubmit={props.handlePostUpdate}>
         <label htmlFor="driver">Are you driving?</label>
         <label>

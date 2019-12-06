@@ -129,6 +129,10 @@ justify-content: center;
 
 }
 
+.filterform {
+  border: solid 2px grey;
+}
+
 /* REGISTER SECTION */
 .registerform {
   box-shadow: 4px 13px 36px 5px #373838;
