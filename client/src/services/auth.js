@@ -49,3 +49,8 @@ export const verifyToken = async () => {
     }
   }
 };
+
+export const getUser = async (userId) => {
+  const resp = await api.get(`/users/${userId}`);
+  return resp.data;
+}

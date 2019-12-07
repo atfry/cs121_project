@@ -47,6 +47,14 @@ userRouter.get('/verify', restrict, (req, res) => {
   res.json({ user: res.locals.user });
 });
 
+userRouter.get('/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  const user = await Users.findOne({
+    where: { id: id }
+  });
+  res.json({ id: user.id, name:user.name, email:user.email });
+});
+
 module.exports = {
   userRouter
 };

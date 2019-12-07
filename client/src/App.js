@@ -8,13 +8,16 @@ import EditForm from './components/EditForm';
 import RideRequest from './components/RideRequest';
 import MyRides from './components/MyRides';
 import SearchResults from './components/SearchResults';
+import UserProfile from './components/UserProfile';
+import User from './components/User';
 import { Route, withRouter } from 'react-router-dom';
 import { createPost, fetchPosts, deletePosts, updatePosts, joinRides, fetchJoinedRides, leaveRide } from './services/posts.js';
 import {
   ping,
   createUser,
   loginUser,
-  verifyToken
+  verifyToken,
+  getUser
 } from './services/auth';
 import './App.css';
 import LoginForm from './components/LoginForm';
@@ -57,6 +60,12 @@ class App extends React.Component {
       currentUser: null,
       currentUserID: null,
       currentUserName: null,
+      currentUserEmail: null,
+      examineUser: {
+        id: null,
+        name: '',
+        email: ''
+      },
       myRides: []
     }
   }
@@ -83,7 +92,8 @@ class App extends React.Component {
       },
       currentUser: user,
       currentUserID: user.id,
-      currentUserName: user.name
+      currentUserName: user.name,
+      currentUserEmail: user.email,
     })
     console.log(this.loginFormData);
     this.props.history.push('/home');
@@ -114,7 +124,11 @@ class App extends React.Component {
         username: '',
         password: '',
         email: ''
-      }
+      },
+      currentUser: user,
+      currentUserID: user.id,
+      currentUserName: user.name,
+      currentUserEmail: user.email
     })
     console.log(this.registerFormData);
     this.props.history.push('/home');
@@ -129,7 +143,11 @@ class App extends React.Component {
       loginFormData: {
         name: '',
         password: '',
-      }
+      },
+      currentUser: null,
+      currentUserID: null,
+      currentUserName: null,
+      currentUserEmail: null
     })
     this.props.history.push('/');
   }
@@ -355,6 +373,15 @@ class App extends React.Component {
     this.props.history.push("/allrides");
   }
 
+  goToUserProfile = async (e) => {
+    const userId = e.target.name;
+    const user = await getUser(userId);
+    this.setState({
+      examineUser: user
+    });
+    this.props.history.push("/user");
+  }
+
   async componentDidMount() {
     const data = await ping();
     const user = await verifyToken();
@@ -373,9 +400,11 @@ class App extends React.Component {
       },
         currentUser: user,
         currentUserID: user.id,
-        currentUserName: user.name
+        currentUserName: user.name,
+        currentUserEmail: user.email,
       })
     }
+    console.log(this.state.currentUser);
     try {
 
     } catch (e) {
@@ -475,6 +504,7 @@ class App extends React.Component {
             filterFormData={this.state.filterFormData}
             handleFilterFormChange={this.handleFilterFormChange}
             handleFilterSubmit={this.handleFilterSubmit}
+            goToUserProfile={this.goToUserProfile}
           />
         )} />
         {this.state.editId && (
@@ -499,6 +529,25 @@ class App extends React.Component {
             showEditForm={this.showEditForm}
             handleJoinSubmit={this.handleJoinSubmit}
             handleFilterClear={this.handleFilterClear}
+          />
+        )} />
+
+        <Route path="/userprofile" render={() => (
+          <UserProfile
+            currentUserName={this.state.currentUserName}
+            joinedPosts={this.state.joinedPosts}
+            myRides={this.state.myRides}
+            email={this.state.currentUserEmail}
+            posts={this.state.posts}
+            currentUserID={this.state.currentUserID}
+          />
+        )} />
+
+        <Route path="/user" render={() => (
+          <User
+            examineUser={this.state.examineUser}
+            posts={this.state.posts}
+            currentUserID={this.state.currentUserID}
           />
         )} />
 

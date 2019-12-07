@@ -7,6 +7,7 @@ export default function AllRides(props) {
   return (
     <div className="allrides">
       <h3>My Rides</h3>
+      <br />
       <CardDeck>
         {props.posts && props.posts.map(post => (
           <div key={post.id}>
