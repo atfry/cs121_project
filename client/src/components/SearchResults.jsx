@@ -63,7 +63,7 @@ export default function SearchResults(props) {
                 <Card.Img variant="top" src="holder.js/100px180" />
                 <div key={post.user_id} className="eachride">
                   <Card.Title> From {post.origin} to {post.destination} </Card.Title>
-                  <p>User: {post.user_name}</p>
+                  <p><Button variant="link" size="lg" name={post.user_id} onClick={props.goToUserProfile}>User: {post.user_name}</Button></p>
                   <p>Date: {post.date}, {post.time}</p>
                   <p>Seats: {post.seats}</p>
                   <div>

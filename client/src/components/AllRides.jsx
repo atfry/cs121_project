@@ -71,6 +71,7 @@ export default function AllRides(props) {
                     <Button variant="secondary" name={post.id} onClick={props.handlePostDelete}>Delete</Button>
                     <Button variant="secondary" onClick={() => props.showEditForm(post.id)}>Edit</Button></div>):
                     <Button variant="secondary" name={post.id} post={post} onClick={props.handleJoinSubmit}>Join</Button>}
+                  <p><Button variant="link" name={post.id} onClick={props.goToPost}>More Details</Button></p>
                   </div>
 
                 </div>

@@ -35,7 +35,7 @@ export default function User(props) {
                                         <Card.Img variant="top" src="holder.js/100px180" />
                                         <div className="eachride">
                                             <Card.Title> From {post.origin} to {post.destination} </Card.Title>
-                                            <p>User: {post.user_name}</p>
+                                            <p><Button variant="link" size="lg" name={post.user_id} onClick={props.goToUserProfile}>User: {post.user_name}</Button></p>
                                             <p>Date: {post.date}, {post.time}</p>
                                             <p>Seats: {post.seats}</p>
                                             { (props.currentUserID === post.user_id)?(<div>

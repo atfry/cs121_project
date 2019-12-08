@@ -10,6 +10,7 @@ import MyRides from './components/MyRides';
 import SearchResults from './components/SearchResults';
 import UserProfile from './components/UserProfile';
 import User from './components/User';
+import Post from './components/Post';
 import { Route, withRouter } from 'react-router-dom';
 import { createPost, fetchPosts, deletePosts, updatePosts, joinRides, fetchJoinedRides, leaveRide } from './services/posts.js';
 import {
@@ -48,6 +49,18 @@ class App extends React.Component {
         user_id: '',
         user_name: '',
       },
+      examinePost: {
+        id: '',
+        driver: false,
+        origin: '',
+        destination: '',
+        date: '',
+        time: '',
+        seats: '',
+        stops: false,
+        user_id: '',
+        user_name: '',
+      },
       filterFormData:{
         origin: '',
         destination: '',
@@ -66,6 +79,7 @@ class App extends React.Component {
         name: '',
         email: ''
       },
+      riders: [],
       myRides: []
     }
   }
@@ -382,6 +396,40 @@ class App extends React.Component {
     this.props.history.push("/user");
   }
 
+  goToPost = async (e) => {
+
+    this.setState({
+      riders: []
+    });
+
+    const postId = e.target.name;
+    const post = this.state.posts.find(post => post.id == postId);
+
+    var riders = [];    
+    for (var i=0, len=this.state.joinedPosts.length; i < len; i++){
+      if(this.state.joinedPosts[i].post_id === post.id.toString()){
+        const user = await getUser(this.state.joinedPosts[i].user_id);
+        riders.push(user);
+      }
+    }
+    this.state.examinePost.id = post.id;
+    this.state.examinePost.driver = post.driver;
+    this.state.examinePost.origin = post.origin;
+    this.state.examinePost.destination = post.destination;
+    this.state.examinePost.date = post.date;
+    this.state.examinePost.time = post.time;
+    this.state.examinePost.seats = post.seats;
+    this.state.examinePost.stops = post.stops;
+    this.state.examinePost.user_id = post.user_id;
+    this.state.examinePost.user_name = post.user_name;
+    
+    this.setState({
+      riders: riders,
+    });
+    console.log(this.state.myRides);
+    this.props.history.push("/post");
+  }
+
   async componentDidMount() {
     const data = await ping();
     const user = await verifyToken();
@@ -490,6 +538,8 @@ class App extends React.Component {
             currentUserID={this.state.currentUserID}
             myRides={this.state.myRides}
             handleRideLeaving = {this.handleRideLeaving}
+            goToUserProfile={this.goToUserProfile}
+            goToPost={this.goToPost}
           />
         )} />
 
@@ -505,6 +555,7 @@ class App extends React.Component {
             handleFilterFormChange={this.handleFilterFormChange}
             handleFilterSubmit={this.handleFilterSubmit}
             goToUserProfile={this.goToUserProfile}
+            goToPost={this.goToPost}
           />
         )} />
         {this.state.editId && (
@@ -529,6 +580,8 @@ class App extends React.Component {
             showEditForm={this.showEditForm}
             handleJoinSubmit={this.handleJoinSubmit}
             handleFilterClear={this.handleFilterClear}
+            goToUserProfile={this.goToUserProfile}
+            goToPost={this.goToPost}
           />
         )} />
 
@@ -540,6 +593,8 @@ class App extends React.Component {
             email={this.state.currentUserEmail}
             posts={this.state.posts}
             currentUserID={this.state.currentUserID}
+            goToUserProfile={this.goToUserProfile}
+            goToPost={this.goToPost}
           />
         )} />
 
@@ -551,13 +606,22 @@ class App extends React.Component {
           />
         )} />
 
+        <Route path="/post" render={() => (
+          <Post
+            riders={this.state.riders}
+            examinePost={this.state.examinePost}
+            goToUserProfile={this.goToUserProfile}
+            handleJoinSubmit={this.handleJoinSubmit}
+            myRides={this.state.myRides}
+          />
+        )} />
+
         <Route path="/requestride" render={() => (
           <RideRequest
             handleCheckbox={this.handleCheckbox}
             postFormData={this.state.postFormData}
             handlePostSubmit={this.handlePostSubmit}
-            handlePostFormChange={this.handlePostFormChange}
-          />
+            handlePostFormChange={this.handlePostFormChange}          />
         )} />
       </div>
     );
