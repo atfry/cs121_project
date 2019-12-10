@@ -129,6 +129,10 @@ justify-content: center;
 
 }
 
+.filterform {
+  border: solid 2px grey;
+}
+
 /* REGISTER SECTION */
 .registerform {
   box-shadow: 4px 13px 36px 5px #373838;
@@ -235,4 +239,16 @@ justify-content: center;
 .loginform .submit {
   margin-left: 50px;
   font-family: 'Noto Sans', sans-serif;
+}
+
+/* Profile */
+
+.stat {
+  border-radius: 5px;
+  border: solid 3px;
+  font-size: 30px;
+}
+
+.email {
+  font-size: 24px;
 }

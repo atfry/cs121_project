@@ -6,38 +6,20 @@ import CardDeck from 'react-bootstrap/CardColumns'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
-export default function UserProfile(props) {
+export default function User(props) {
     return (
         <div>
             <br />
+            <h2> User Profile </h2>
+            <br />
             <div className="user">
-                <h3>Username: {props.currentUserName}</h3>
+                <h3>Username: {props.examineUser.name}</h3>
             </div>
             <div className="email">
-                <h4>Email: {props.email}</h4>
+                <h4>Email: {props.examineUser.email}</h4>
             </div>
             <br />
             <Container>
-                <Row>
-                    <Col>
-                        <div className="stat">
-                            {props.myRides.length}
-                        </div>
-                    </Col>
-                    <Col>
-                        <div className="stat">
-                            {props.joinedPosts.length}
-                        </div>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col> <div className="email">
-                        Posts
-                    </div> </Col>
-                    <Col> <div className="email">
-                        Number of Rides Joined
-                    </div> </Col>
-                </Row>
                 <br />
                 <div className="stat">
                     Posts
@@ -47,7 +29,7 @@ export default function UserProfile(props) {
                         <CardDeck>
                             {props.posts && props.posts.map(post => (
                             <div key={post.id}>
-                                { ( (props.myRides.indexOf(post.id.toString()) !== -1 || post.seats == 0) && props.currentUserID === post.user_id)?(
+                                { ( props.examineUser.id === post.user_id)?(
                                     <div>
                                         <Card>
                                         <Card.Img variant="top" src="holder.js/100px180" />
@@ -57,9 +39,9 @@ export default function UserProfile(props) {
                                             <p>Date: {post.date}, {post.time}</p>
                                             <p>Seats: {post.seats}</p>
                                             { (props.currentUserID === post.user_id)?(<div>
-                                            <Button variant="secondary" name={post.id} onClick={props.handlePostDelete}>Delete</Button>
-                                            <Button variant="secondary" onClick={() => props.showEditForm(post.id)}>Edit</Button></div>):
-                                            <Button variant="secondary" name={post.id} onClick={props.handleRideLeaving}>Leave Ride</Button>}
+                                                <Button variant="secondary" name={post.id} onClick={props.handlePostDelete}>Delete</Button>
+                                                <Button variant="secondary" onClick={() => props.showEditForm(post.id)}>Edit</Button></div>):
+                                                <Button variant="secondary" name={post.id} post={post} onClick={props.handleJoinSubmit}>Join</Button>}
                                         </div>
                                         </Card>
                                     </div>

@@ -10,6 +10,7 @@ const Nav = (props) => {
         <Link to="/allrides">All Rides</Link>
         <Link to="/requestride">Post a Ride</Link>
         <Link to="/myrides">My Rides</Link>
+        <Link to="/userprofile">My Profile</Link>
         <button onClick={props.handleLogout}>Log out</button>
       </nav>
     </header>

@@ -30,7 +30,8 @@ const Posts = sequelize.define('posts', {
   stops: Sequelize.BOOLEAN,
   isDriver: Sequelize.BOOLEAN,
   joinedUsers: Sequelize.STRING,
-  user_id: Sequelize.STRING
+  user_id: Sequelize.STRING,
+  user_name: Sequelize.STRING,
 });
 
 
@@ -41,7 +42,7 @@ const PostGroups = sequelize.define('postgroups', {
 
 // RELATIONSHIP BETWEEN Posts AND Users WILL BE Post Groups HERE...
 Users.hasMany(Posts);
-Posts.belongsTo(Users);
+//Posts.belongsTo(Users);
 // PostGroups.hasMany(Users);
 // PostGroups.belongsTo(Users);
 
